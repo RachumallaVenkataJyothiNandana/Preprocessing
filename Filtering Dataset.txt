@@ -1,0 +1,68 @@
+#to load the dataset and to view the dataset
+dataset1 = read.csv("C:/Users/Srinivas/Desktop/nandana/castor3.csv")
+
+#To check any data is not available in dataset
+b<-is.na(dataset1)
+b
+
+dataset<-na.omit(dataset1)
+dataset
+
+#to display the column names
+names(dataset)
+
+class("Crop")
+class("State")
+class("District")
+class("Year")
+class("Season")
+summary(dataset)
+
+summary(dataset$Area)
+
+#To know the number of rows in dataset
+nrow(dataset)
+
+#to know the number of columns in dataset
+ncol(dataset)
+
+#to retriew top 6 rows from the dataset
+head(dataset)
+
+#to retriew bottom 6 rows from the dataset
+tail(dataset)
+
+#to know how many levels in state
+levels(dataset$State)
+
+#to know how many levels in district
+levels(dataset$District)
+
+#to know how many levels in year
+levels(dataset$Year)
+
+#X used to predict production 
+X=dataset[,3:7]
+X
+
+#to chage  the categorical values to numeric
+cols<-c("District","Year","Season")
+for(i in cols){
+  X[,i]=as.factor(X[,i])
+}
+
+#To provide the information of objects
+str(X)
+
+#installing packages devtoolandcaTool
+install.packages("devtools")
+install.packages("caTools")
+
+#using the caTool package
+library("caTools")
+set.seed(123)
+
+#Splitting the data for training and testing
+split=sample.split(X$Production,SplitRatio = 0.9)
+training_set=subset(X, split==TRUE)
+test_set=subset(X, split==FALSE)
